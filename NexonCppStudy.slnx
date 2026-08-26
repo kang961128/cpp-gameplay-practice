@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="NexonCppStudy/NexonCppStudy.vcxproj" Id="a15e5eb6-a3b6-44ce-9696-d02f79304884" />
+</Solution>
