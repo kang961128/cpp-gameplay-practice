@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <limits>
 
 class Character
 {
@@ -139,6 +140,23 @@ int main()
     }
 
     int playerDamage = 0;
+
+    while (true)
+    {
+        std::cout << "Enter Player damage: ";
+        std::cin >> playerDamage;
+
+        if (!std::cin.fail() && playerDamage > 0)
+        {
+            break;
+        }
+
+        std::cout << "Invalid damage." << '\n';
+
+        std::cin.clear();
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 
     std::cout << "Enter Player damage: ";
     std::cin >> playerDamage;
