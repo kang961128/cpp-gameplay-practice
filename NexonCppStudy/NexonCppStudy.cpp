@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <cassert>
 
 class Character
 {
@@ -46,7 +47,7 @@ public:
 
     void takeDamage(int amount)
     {
-        if (amount < 0)
+        if (amount <= 0)
         {
             return;
         }
@@ -112,6 +113,29 @@ public:
         }
     }
 };
+
+void runCharacterTests()
+{
+    Character testCharacter(999, "Test", 100);
+    testCharacter.takeDamage(30);
+    assert(testCharacter.getHp() == 70);
+    std::cout << "[PASS] Normal damage" << '\n';
+
+    Character excessiveDamageCharacter(998, "Test", 100);
+    excessiveDamageCharacter.takeDamage(150);
+    assert(excessiveDamageCharacter.getHp() == 0);
+    std::cout << "[PASS] Excessive damage" << '\n';
+
+    Character negativeDamageCharacter(997, "Test", 100);
+    negativeDamageCharacter.takeDamage(-10);
+    assert(negativeDamageCharacter.getHp() == 100);
+    std::cout << "[PASS] Negative damage ignored" << '\n';
+
+    Character zeroDamageCharacter(996, "Test", 100);
+    zeroDamageCharacter.takeDamage(0);
+    assert(zeroDamageCharacter.getHp() == 100);
+    std::cout << "[PASS] Zero damage has no effect" << '\n';
+}
 
 int readPositiveDamage()
 {
@@ -189,6 +213,8 @@ Character* findCharacterById(
 
 int main()
 {
+    runCharacterTests();
+
     std::vector<Character> party;
 
     party.emplace_back(1, "Player", 100);
