@@ -113,6 +113,64 @@ public:
     }
 };
 
+int readPositiveDamage()
+{
+    int playerDamage = 0;
+
+    while (true)
+    {
+        std::cout << "Enter Player damage: ";
+        std::cin >> playerDamage;
+
+        if (!std::cin.fail() && playerDamage > 0)
+        {
+            break;
+        }
+
+        std::cout << "Invalid damage." << '\n';
+
+        std::cin.clear();
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+    return playerDamage;
+}
+
+void runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage)
+{
+    int turn = 1;
+
+    while (!attacker.isDead() && !target.isDead())
+    {
+        std::cout << '\n' << "=== Turn " << turn << " ===" << '\n';
+
+        std::cout << attacker.getName() << " attacks " << target.getName() << " for " << attackerDamage << " damage." << '\n';
+
+        attacker.attack(target, attackerDamage);
+
+        if (!target.isDead())
+        {
+            std::cout << target.getName() << " attacks " << attacker.getName() << " for " << targetDamage << " damage." << '\n';
+            target.attack(attacker, targetDamage);
+        }
+
+        std::cout << attacker.getName() << " HP: " << attacker.getHp() << '\n';
+        std::cout << target.getName() << " HP: " << target.getHp() << '\n';
+        turn++;
+    }
+
+    std::cout << '\n' << "=== Battle Result ===" << '\n';
+
+    if (attacker.isDead())
+    {
+        std::cout << target.getName() << " wins." << '\n';
+    }
+    else
+    {
+        std::cout << attacker.getName() << " wins." << '\n';
+    }
+}
+
 Character* findCharacterById(
     std::vector<Character>& party,
     int targetId
@@ -149,56 +207,9 @@ int main()
         return 1;
     }
 
-    int playerDamage = 0;
+    int playerDamage = readPositiveDamage();
 
-    while (true)
-    {
-        std::cout << "Enter Player damage: ";
-        std::cin >> playerDamage;
-
-        if (!std::cin.fail() && playerDamage > 0)
-        {
-            break;
-        }
-
-        std::cout << "Invalid damage." << '\n';
-
-        std::cin.clear();
-
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-
-    int turn = 1;
-
-    while (!attacker->isDead() && !target->isDead())
-    {
-        std::cout << '\n' << "=== Turn " << turn << " ===" << '\n';
-
-        std::cout << attacker->getName() << " attacks " << target->getName() << " for " << playerDamage << " damage." << '\n';
-
-        attacker->attack(*target, playerDamage);
-
-        if (!target->isDead())
-        {
-            std::cout << target->getName() << " attacks " << attacker->getName() << " for 20 damage." << '\n';
-            target->attack(*attacker, 20);
-        }
-
-        std::cout << attacker->getName() << " HP: " << attacker->getHp() << '\n';
-        std::cout << target->getName() << " HP: " << target->getHp() << '\n';
-        turn++;
-    }
-
-    std::cout << '\n' << "=== Battle Result ===" << '\n';
-
-    if (attacker->isDead())
-    {
-        std::cout << target->getName() << " wins." << '\n';
-    }
-    else
-    {
-        std::cout << attacker->getName() << " wins." << '\n';
-    }
+    runBattle(*attacker, *target, playerDamage, 20);
     
     /*Character* missingTarget =
         findCharacterById(party, 99);
