@@ -20,7 +20,6 @@ public:
         hp(maximumHp),
         maxHp(maximumHp),
         id(characterId)
-
     {
         if (maxHp < 1)
         {
@@ -132,6 +131,12 @@ int main()
 
     Character* target =
         findCharacterById(party, 2);
+
+    if (attacker == nullptr || target == nullptr)
+    {
+        std::cout << "Combat character not found." << '\n';
+        return 1;
+    }
 
     while (!attacker->isDead() && !target->isDead())
     {
