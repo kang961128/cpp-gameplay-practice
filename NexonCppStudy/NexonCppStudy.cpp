@@ -11,11 +11,6 @@ private:
     int id;
 
 public:
-    // TODO 1:
-    // 이름과 최대 HP를 받는 생성자
-    // name은 전달받은 이름으로 초기화
-    // hp와 maxHp는 maximumHp로 초기화
-    // maximumHp가 1보다 작으면 hp와 maxHp를 모두 1로 변경
     Character(
         int characterId,
         const std::string& characterName,
@@ -25,6 +20,7 @@ public:
         hp(maximumHp),
         maxHp(maximumHp),
         id(characterId)
+
     {
         if (maxHp < 1)
         {
@@ -37,11 +33,6 @@ public:
     {
         return id;
     }
-
-    // TODO 2:
-    // 음수 피해는 무시
-    // HP에서 피해량 차감
-    // HP가 0보다 작으면 0으로 제한
 
     void takeDamage(int amount)
     {
@@ -76,7 +67,6 @@ public:
         {
             hp = maxHp;
         }
-
     }
 
     void revive()
@@ -87,6 +77,15 @@ public:
         }
     }
 
+    void attack(Character& target, int damage)
+    {
+        if (isDead())
+        {
+            return;
+        }
+
+        target.takeDamage(damage);
+    }
 
     bool isDead() const
     {
@@ -111,17 +110,12 @@ Character* findCharacterById(
 {
     for (Character& member : party)
     {
-        // TODO:
-        // member의 ID가 targetId와 같으면
-        // member의 주소를 반환
         if (member.getId() == targetId)
         {
             return &member;
         }
     }
 
-    // TODO:
-    // 끝까지 찾지 못하면 nullptr 반환
     return nullptr;
 }
 
@@ -133,12 +127,15 @@ int main()
     party.emplace_back(2, "Mage", 80);
     party.emplace_back(3, "Tank", 150);
 
+    Character* attacker =
+        findCharacterById(party, 1);
+
     Character* target =
         findCharacterById(party, 2);
 
-    if (target != nullptr)
+    if (attacker != nullptr && target != nullptr)
     {
-        target->takeDamage(100);
+        attacker->attack(*target, 30);
     }
 
     Character* missingTarget =
