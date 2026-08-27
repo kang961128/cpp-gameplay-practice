@@ -138,9 +138,20 @@ int main()
         return 1;
     }
 
+    int playerDamage = 0;
+
+    std::cout << "Enter Player damage: ";
+    std::cin >> playerDamage;
+
+    if (std::cin.fail() || playerDamage <= 0)
+    {
+        std::cout << "Invalid damage." << '\n';
+        return 1;
+    }
+
     while (!attacker->isDead() && !target->isDead())
     {
-        attacker->attack(*target, 30);
+        attacker->attack(*target, playerDamage);
 
         if (!target->isDead())
         {
