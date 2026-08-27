@@ -133,9 +133,14 @@ int main()
     Character* target =
         findCharacterById(party, 2);
 
-    if (attacker != nullptr && target != nullptr)
+    while (!attacker->isDead() && !target->isDead())
     {
         attacker->attack(*target, 30);
+
+        if (!target->isDead())
+        {
+            target->attack(*attacker, 20);
+        }
     }
 
     Character* missingTarget =
