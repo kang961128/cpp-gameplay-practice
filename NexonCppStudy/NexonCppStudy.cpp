@@ -34,6 +34,16 @@ public:
         return id;
     }
 
+    int getHp() const
+    {
+        return hp;
+    }
+
+    const std::string& getName() const
+    {
+        return name;
+    }
+
     void takeDamage(int amount)
     {
         if (amount < 0)
@@ -158,26 +168,39 @@ int main()
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    std::cout << "Enter Player damage: ";
-    std::cin >> playerDamage;
-
-    if (std::cin.fail() || playerDamage <= 0)
-    {
-        std::cout << "Invalid damage." << '\n';
-        return 1;
-    }
+    int turn = 1;
 
     while (!attacker->isDead() && !target->isDead())
     {
+        std::cout << '\n' << "=== Turn " << turn << " ===" << '\n';
+
+        std::cout << attacker->getName() << " attacks " << target->getName() << " for " << playerDamage << " damage." << '\n';
+
         attacker->attack(*target, playerDamage);
 
         if (!target->isDead())
         {
+            std::cout << target->getName() << " attacks " << attacker->getName() << " for 20 damage." << '\n';
             target->attack(*attacker, 20);
         }
+
+        std::cout << attacker->getName() << " HP: " << attacker->getHp() << '\n';
+        std::cout << target->getName() << " HP: " << target->getHp() << '\n';
+        turn++;
     }
 
-    Character* missingTarget =
+    std::cout << '\n' << "=== Battle Result ===" << '\n';
+
+    if (attacker->isDead())
+    {
+        std::cout << target->getName() << " wins." << '\n';
+    }
+    else
+    {
+        std::cout << attacker->getName() << " wins." << '\n';
+    }
+    
+    /*Character* missingTarget =
         findCharacterById(party, 99);
 
     if (missingTarget == nullptr)
@@ -188,7 +211,7 @@ int main()
     for (const Character& member : party)
     {
         member.printStatus();
-    }
-
+    }*/
+    
     return 0;
 }
