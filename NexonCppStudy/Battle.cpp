@@ -1,6 +1,50 @@
 #include "Battle.h"
+#include "Character.h"
+#include "Skill.h"
 
 #include <iostream>
+
+namespace
+{
+    void performAction(Character& actor, Character& opponent, bool showLogs)
+    {
+        if (actor.getSkill().isReady())
+        {
+            if (showLogs)
+            {
+                std::cout
+                    << actor.getName()
+                    << " uses "
+                    << actor.getSkill().getName()
+                    << " on "
+                    << opponent.getName()
+                    << " for "
+                    << actor.getSkill().getDamage()
+                    << " damage."
+                    << '\n';
+            }
+
+            actor.useSkill(opponent);
+            return;
+        }
+
+        if (showLogs)
+        {
+            std::cout
+                << actor.getName()
+                << " attacks "
+                << opponent.getName()
+                << " for "
+                << actor.getAttackPower()
+                << " damage."
+                << '\n';
+        }
+
+        actor.attack(opponent);
+        actor.reduceSkillCooldown();
+    }
+}
+
 
 BattleResult runBattle(Character& attacker, Character& target, bool showLogs)
 {
@@ -11,26 +55,13 @@ BattleResult runBattle(Character& attacker, Character& target, bool showLogs)
         if (showLogs)
         {
             std::cout << '\n' << "=== Turn " << turn << " ===" << '\n';
-
-            std::cout
-                << attacker.getName() << " attacks "
-                << target.getName() << " for "
-                << attacker.getAttackPower() << " damage." << '\n';
         }
 
-        attacker.attack(target);
+        performAction(attacker, target, showLogs);
 
         if (!target.isDead())
         {
-            if (showLogs)
-            {
-                std::cout
-                    << target.getName() << " attacks "
-                    << attacker.getName() << " for "
-                    << target.getAttackPower() << " damage." << '\n';
-            }
-            
-            target.attack(attacker);
+            performAction(target, attacker, showLogs);
         }
 
         if (showLogs)

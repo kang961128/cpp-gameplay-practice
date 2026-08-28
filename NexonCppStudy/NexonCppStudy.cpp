@@ -3,6 +3,8 @@
 #include "CharacterTests.h"
 #include "Battle.h"
 #include "BattleTests.h"
+#include "SkillTests.h"
+#include "Skill.h"
 
 #include <iostream>
 #include <vector>
@@ -57,6 +59,7 @@ int main()
         runCharacterTests();
         runFindCharacterTests();
         runBattleTests();
+        runSkillTests();
 
         std::cout << '\n' << "All tests passed." << '\n';
 
@@ -65,9 +68,9 @@ int main()
 
     std::vector<Character> party;
 
-    party.emplace_back(1, "Player", 100, 30);
-    party.emplace_back(2, "Mage", 80, 20);
-    party.emplace_back(3, "Tank", 150, 15);
+    party.emplace_back(1, "Player", 100, 30, Skill("Power Shot", 50, 2));
+    party.emplace_back(2, "Mage", 80, 20, Skill("Fireball", 40, 2));
+    party.emplace_back(3, "Tank", 150, 15, Skill("Shield Bash", 25, 1));
 
     std::cout << '\n' << "=== Character List ===" << '\n';
 

@@ -1,6 +1,7 @@
 #include "CharacterTests.h"
 #include "Character.h"
 #include "CharacterSearch.h"
+#include "Skill.h"
 
 #include <cassert>
 #include <iostream>
@@ -85,6 +86,25 @@ void runCharacterTests()
     deadAttacker.attack(protectedTarget);
     assert(protectedTarget.getHp() == 100);
     std::cout << "[PASS] Dead character cannot attack" << '\n';
+
+    Character skillUser(987, "Skill User", 100, 10, Skill("Power Strike", 50, 2));
+    Character skillTarget(986, "Target", 100);
+    bool firstUse = skillUser.useSkill(skillTarget);
+    assert(firstUse);
+    assert(skillTarget.getHp() == 50);
+    assert(skillUser.getSkill().getRemainingCooldown() == 2);
+
+    bool secondUse = skillUser.useSkill(skillTarget);
+    assert(!secondUse);
+    assert(skillTarget.getHp() == 50);
+
+    skillUser.reduceSkillCooldown();
+    assert(skillUser.getSkill().getRemainingCooldown() == 1);
+
+    skillUser.reduceSkillCooldown();
+    assert(skillUser.getSkill().isReady());
+
+    std::cout << "[PASS] Character skill use and cooldown" << '\n';
 }
 
 void runFindCharacterTests()

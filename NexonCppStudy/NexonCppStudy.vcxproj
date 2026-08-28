@@ -150,6 +150,8 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battle.h" />
@@ -157,6 +159,8 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterSearch.h" />
     <ClInclude Include="CharacterTests.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

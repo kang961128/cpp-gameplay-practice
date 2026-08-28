@@ -6,13 +6,15 @@ Character::Character(
 	int characterId,
 	const std::string& characterName,
 	int maximumHp,
-    int initialAttackPower
+    int initialAttackPower,
+    const Skill& characterSkill
 )
 	: name(characterName),
 	hp(maximumHp),
 	maxHp(maximumHp),
 	id(characterId),
-    attackPower(initialAttackPower)
+    attackPower(initialAttackPower),
+    skill(characterSkill)
 {
 	if (maxHp < 1)
 	{
@@ -123,8 +125,40 @@ void Character::printStatus() const
         << " Attack: " << attackPower
         << '\n';
 
+    std::cout
+        << "    Skill: " << skill.getName()
+        << " Damage: " << skill.getDamage()
+        << " Cooldown: " << skill.getCooldown()
+        << '\n';
+
     if (isDead())
     {
         std::cout << name << " died." << '\n';
     }
+}
+
+const Skill& Character::getSkill() const
+{
+    return skill;
+}
+
+bool Character::useSkill(Character& target)
+{
+    if (isDead() || target.isDead())
+    {
+        return false;
+    }
+
+    if (!skill.activate())
+    {
+        return false;
+    }
+
+    target.takeDamage(skill.getDamage());
+    return true;
+}
+
+void Character::reduceSkillCooldown()
+{
+    skill.reduceCooldown();
 }
