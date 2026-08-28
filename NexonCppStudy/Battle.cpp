@@ -2,30 +2,52 @@
 
 #include <iostream>
 
-BattleResult runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage)
+BattleResult runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage, bool showLogs)
 {
     int turn = 1;
 
     while (!attacker.isDead() && !target.isDead())
     {
-        std::cout << '\n' << "=== Turn " << turn << " ===" << '\n';
+        if (showLogs)
+        {
+            std::cout << '\n' << "=== Turn " << turn << " ===" << '\n';
 
-        std::cout << attacker.getName() << " attacks " << target.getName() << " for " << attackerDamage << " damage." << '\n';
+            std::cout
+                << attacker.getName() << " attacks "
+                << target.getName() << " for "
+                << attackerDamage << " damage." << '\n';
+        }
 
         attacker.attack(target, attackerDamage);
 
         if (!target.isDead())
         {
-            std::cout << target.getName() << " attacks " << attacker.getName() << " for " << targetDamage << " damage." << '\n';
+            if (showLogs)
+            {
+                std::cout
+                    << target.getName() << " attacks "
+                    << attacker.getName() << " for "
+                    << targetDamage << " damage." << '\n';
+            }
+            
             target.attack(attacker, targetDamage);
         }
 
-        std::cout << attacker.getName() << " HP: " << attacker.getHp() << "/" << attacker.getMaxHp() << '\n';
-        std::cout << target.getName() << " HP: " << target.getHp() << "/" << target.getMaxHp() << '\n';
+        if (showLogs)
+        {
+            std::cout
+                << attacker.getName() << " HP: "
+                << attacker.getHp() << "/"
+                << attacker.getMaxHp()<< '\n';
+
+            std::cout
+                << target.getName() << " HP: "
+                << target.getHp() << "/"
+                << target.getMaxHp() << '\n';
+        }
+        
         turn++;
     }
-
-    std::cout << '\n' << "=== Battle Result ===" << '\n';
 
     BattleResult result;
 
@@ -34,12 +56,24 @@ BattleResult runBattle(Character& attacker, Character& target, int attackerDamag
     if (attacker.isDead())
     {
         result.winnerId = target.getId();
-        std::cout << target.getName() << " wins." << '\n';
     }
     else
     {
         result.winnerId = attacker.getId();
-        std::cout << attacker.getName() << " wins." << '\n';
+    }
+
+    if (showLogs)
+    {
+        std::cout << '\n' << "=== Battle Result ===" << '\n';
+
+        if (attacker.isDead())
+        {
+            std::cout << target.getName() << " wins." << '\n';
+        }
+        else
+        {
+            std::cout << attacker.getName() << " wins." << '\n';
+        }
     }
 
     return result;

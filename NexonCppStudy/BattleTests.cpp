@@ -10,7 +10,7 @@ void runBattleTests()
 	Character attacker(1, "Player", 100);
 	Character target(2, "Mage", 80);
 
-	BattleResult result = runBattle(attacker, target, 30, 20);
+	BattleResult result = runBattle(attacker, target, 30, 20, false);
 
 	assert(result.turnCount == 3);
 	assert(result.winnerId == 1);
