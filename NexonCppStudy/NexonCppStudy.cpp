@@ -7,6 +7,12 @@
 
 void runCharacterTests()
 {
+    Character invalidMaxHpCharacter(777, "Test", 0);
+    assert(invalidMaxHpCharacter.getHp() == 1);
+    assert(invalidMaxHpCharacter.getMaxHp() == 1);
+    assert(!invalidMaxHpCharacter.isDead());
+    std::cout << "[PASS] Invalid max HP corrected" << '\n';
+
     Character testCharacter(999, "Test", 100);
     testCharacter.takeDamage(30);
     assert(testCharacter.getHp() == 70);
@@ -113,8 +119,8 @@ void runBattle(Character& attacker, Character& target, int attackerDamage, int t
             target.attack(attacker, targetDamage);
         }
 
-        std::cout << attacker.getName() << " HP: " << attacker.getHp() << '\n';
-        std::cout << target.getName() << " HP: " << target.getHp() << '\n';
+        std::cout << attacker.getName() << " HP: " << attacker.getHp() << "/" << attacker.getMaxHp() << '\n';
+        std::cout << target.getName() << " HP: " << target.getHp() << "/" << target.getMaxHp() << '\n';
         turn++;
     }
 

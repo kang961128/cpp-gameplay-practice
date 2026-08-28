@@ -19,6 +19,7 @@ public:
 
 	int getId() const;
 	int getHp() const;
+	int getMaxHp() const;
 	const std::string& getName() const;
 
 	void takeDamage(int amount);

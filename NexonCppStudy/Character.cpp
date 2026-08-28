@@ -29,6 +29,11 @@ int Character::getHp() const
 	return hp;
 }
 
+int Character::getMaxHp() const
+{
+    return maxHp;
+}
+
 const std::string& Character::getName() const
 {
 	return name;
@@ -94,7 +99,7 @@ bool Character::isDead() const
 
 void Character::printStatus() const
 {
-    std::cout << "[" << id << "] " << name << " HP: " << hp << '\n';
+    std::cout << "[" << id << "] " << name << " HP: " << hp << "/" << maxHp << '\n';
 
     if (isDead())
     {
