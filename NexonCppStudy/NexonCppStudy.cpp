@@ -34,9 +34,34 @@ int readPositiveInt(const std::string& prompt)
 
 int main()
 {
-    runCharacterTests();
-    runFindCharacterTests();
-    runBattleTests();
+    int mode = 0;
+
+    while (true)
+    {
+        std::cout << "=== Main Menu ===" << '\n';
+        std::cout << "1. Run game" << '\n';
+        std::cout << "2. Run tests" << '\n';
+
+        mode = readPositiveInt("Select Mode: ");
+
+        if (mode == 1 || mode == 2)
+        {
+            break;
+        }
+
+        std::cout << "Invalid mode." << '\n';
+    }
+
+    if (mode == 2)
+    {
+        runCharacterTests();
+        runFindCharacterTests();
+        runBattleTests();
+
+        std::cout << '\n' << "All tests passed." << '\n';
+
+        return 0;
+    }
 
     std::vector<Character> party;
 
