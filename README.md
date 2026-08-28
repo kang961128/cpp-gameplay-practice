@@ -40,8 +40,8 @@ C++ 기본 문법과 객체지향 설계를 학습하며 제작한 콘솔 기반
 ```text
 cpp-gameplay-practice/
 ├── README.md
-├── NexonCppStudy.slnx
-└── NexonCppStudy/
+├── CppCombatSimulator.slnx
+└── CppCombatSimulator/
     ├── Battle.h
     ├── Battle.cpp
     ├── BattleTests.h
@@ -56,7 +56,7 @@ cpp-gameplay-practice/
     ├── Skill.cpp
     ├── SkillTests.h
     ├── SkillTests.cpp
-    └── NexonCppStudy.cpp
+    └── main.cpp
 ```
 
 ### 파일별 역할
