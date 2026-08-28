@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <string>
 
 void runCharacterTests()
 {
@@ -78,27 +79,27 @@ void runCharacterTests()
     std::cout << "[PASS] Dead character cannot attack" << '\n';
 }
 
-int readPositiveDamage()
+int readPositiveDamage(const std::string& prompt)
 {
-    int playerDamage = 0;
+    int value = 0;
 
     while (true)
     {
-        std::cout << "Enter Player damage: ";
-        std::cin >> playerDamage;
+        std::cout << prompt;
+        std::cin >> value;
 
-        if (!std::cin.fail() && playerDamage > 0)
+        if (!std::cin.fail() && value > 0)
         {
             break;
         }
 
-        std::cout << "Invalid damage." << '\n';
+        std::cout << "Invalid value." << '\n';
 
         std::cin.clear();
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
-    return playerDamage;
+    return value;
 }
 
 void runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage)
@@ -184,21 +185,46 @@ int main()
     party.emplace_back(2, "Mage", 80);
     party.emplace_back(3, "Tank", 150);
 
-    Character* attacker =
-        findCharacterById(party, 1);
+    std::cout << '\n' << "=== Character List ===" << '\n';
 
-    Character* target =
-        findCharacterById(party, 2);
-
-    if (attacker == nullptr || target == nullptr)
+    for (const Character& member : party)
     {
-        std::cout << "Combat character not found." << '\n';
-        return 1;
+        member.printStatus();
     }
 
-    int playerDamage = readPositiveDamage();
+    Character* attacker = nullptr;
+    Character* target = nullptr;
 
-    runBattle(*attacker, *target, playerDamage, 20);
+    while (true)
+    {
+        int attackerId = readPositiveDamage("Enter attacker ID: ");
+        int targetId = readPositiveDamage("Enter target ID: ");
+
+        attacker = findCharacterById(party, attackerId);
+        target = findCharacterById(party, targetId);
+
+        if (attacker == nullptr || target == nullptr)
+        {
+            std::cout << "Combat character not found." << '\n';
+            continue;
+        }
+
+        if (attacker == target)
+        {
+            std::cout << "Attacker and target must be different." << '\n';
+            continue;
+        }
+
+        break;
+    }        
+
+    
+
+    
+
+    int attackerDamage = readPositiveDamage("Enter Player damage: ");
+
+    runBattle(*attacker, *target, attackerDamage, 20);
     
     return 0;
 }
