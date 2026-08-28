@@ -1,13 +1,14 @@
 #include "Character.h"
 #include "CharacterSearch.h"
 #include "CharacterTests.h"
+#include "Battle.h"
 
 #include <iostream>
 #include <vector>
 #include <limits>
 #include <string>
 
-int readPositiveint(const std::string& prompt)
+int readPositiveInt(const std::string& prompt)
 {
     int value = 0;
 
@@ -28,41 +29,6 @@ int readPositiveint(const std::string& prompt)
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
     return value;
-}
-
-void runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage)
-{
-    int turn = 1;
-
-    while (!attacker.isDead() && !target.isDead())
-    {
-        std::cout << '\n' << "=== Turn " << turn << " ===" << '\n';
-
-        std::cout << attacker.getName() << " attacks " << target.getName() << " for " << attackerDamage << " damage." << '\n';
-
-        attacker.attack(target, attackerDamage);
-
-        if (!target.isDead())
-        {
-            std::cout << target.getName() << " attacks " << attacker.getName() << " for " << targetDamage << " damage." << '\n';
-            target.attack(attacker, targetDamage);
-        }
-
-        std::cout << attacker.getName() << " HP: " << attacker.getHp() << "/" << attacker.getMaxHp() << '\n';
-        std::cout << target.getName() << " HP: " << target.getHp() << "/" << target.getMaxHp() << '\n';
-        turn++;
-    }
-
-    std::cout << '\n' << "=== Battle Result ===" << '\n';
-
-    if (attacker.isDead())
-    {
-        std::cout << target.getName() << " wins." << '\n';
-    }
-    else
-    {
-        std::cout << attacker.getName() << " wins." << '\n';
-    }
 }
 
 int main()
@@ -88,8 +54,8 @@ int main()
 
     while (true)
     {
-        int attackerId = readPositiveint("Enter attacker ID: ");
-        int targetId = readPositiveint("Enter target ID: ");
+        int attackerId = readPositiveInt("Enter attacker ID: ");
+        int targetId = readPositiveInt("Enter target ID: ");
 
         attacker = findCharacterById(party, attackerId);
         target = findCharacterById(party, targetId);
@@ -109,7 +75,7 @@ int main()
         break;
     }        
 
-    int attackerDamage = readPositiveint("Enter attacker damage: ");
+    int attackerDamage = readPositiveInt("Enter attacker damage: ");
 
     runBattle(*attacker, *target, attackerDamage, 20);
     
