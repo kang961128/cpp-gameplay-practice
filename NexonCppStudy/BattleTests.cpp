@@ -1,6 +1,7 @@
 #include "BattleTests.h"
 #include "Character.h"
 #include "Battle.h"
+#include "Skill.h"
 
 #include <cassert>
 #include <iostream>
