@@ -8,6 +8,14 @@
 
 void runCharacterTests()
 {
+    Character attackPowerCharacter(775, "Test", 100, 30);
+    assert(attackPowerCharacter.getAttackPower() == 30);
+    std::cout << "[PASS] Attack power initialized" << '\n';
+
+    Character invalidAttackPowerCharacter(776, "Test", 100, 0);
+    assert(invalidAttackPowerCharacter.getAttackPower() == 1);
+    std::cout << "[PASS] Invalid attack power corrected" << '\n';
+
     Character invalidMaxHpCharacter(777, "Test", 0);
     assert(invalidMaxHpCharacter.getHp() == 1);
     assert(invalidMaxHpCharacter.getMaxHp() == 1);
@@ -63,18 +71,18 @@ void runCharacterTests()
     assert(!reviveCharacter.isDead());
     std::cout << "[PASS] Revive restores max HP" << '\n';
 
-    Character livingAttacker(991, "Test", 100);
+    Character livingAttacker(991, "Test", 100, 30);
     Character attackTarget(990, "Test", 100);
-    livingAttacker.attack(attackTarget, 30);
+    livingAttacker.attack(attackTarget);
     assert(livingAttacker.getHp() == 100);
     assert(attackTarget.getHp() == 70);
-    std::cout << "[PASS] Living character can attack" << '\n';
+    std::cout << "[PASS] Living character uses its attack power" << '\n';
 
-    Character deadAttacker(989, "Test", 100);
+    Character deadAttacker(989, "Test", 100, 30);
     Character protectedTarget(988, "Test", 100);
     deadAttacker.takeDamage(100);
     assert(deadAttacker.isDead());
-    deadAttacker.attack(protectedTarget, 30);
+    deadAttacker.attack(protectedTarget);
     assert(protectedTarget.getHp() == 100);
     std::cout << "[PASS] Dead character cannot attack" << '\n';
 }

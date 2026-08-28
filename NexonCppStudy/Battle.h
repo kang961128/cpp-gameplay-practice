@@ -8,4 +8,4 @@ struct BattleResult
 	int winnerId;
 };
 
-BattleResult runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage, bool showLogs = true);
+BattleResult runBattle(Character& attacker, Character& target, bool showLogs = true);

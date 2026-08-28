@@ -65,9 +65,9 @@ int main()
 
     std::vector<Character> party;
 
-    party.emplace_back(1, "Player", 100);
-    party.emplace_back(2, "Mage", 80);
-    party.emplace_back(3, "Tank", 150);
+    party.emplace_back(1, "Player", 100, 30);
+    party.emplace_back(2, "Mage", 80, 20);
+    party.emplace_back(3, "Tank", 150, 15);
 
     std::cout << '\n' << "=== Character List ===" << '\n';
 
@@ -102,9 +102,7 @@ int main()
         break;
     }        
 
-    int attackerDamage = readPositiveInt("Enter attacker damage: ");
-
-    BattleResult result = runBattle(*attacker, *target, attackerDamage, 20);
+    BattleResult result = runBattle(*attacker, *target);
 
     std::cout << "Battle lasted " << result.turnCount << " turns." << '\n';
     std::cout << "Winner ID: " << result.winnerId << '\n';

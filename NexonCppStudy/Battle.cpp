@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-BattleResult runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage, bool showLogs)
+BattleResult runBattle(Character& attacker, Character& target, bool showLogs)
 {
     int turn = 1;
 
@@ -15,10 +15,10 @@ BattleResult runBattle(Character& attacker, Character& target, int attackerDamag
             std::cout
                 << attacker.getName() << " attacks "
                 << target.getName() << " for "
-                << attackerDamage << " damage." << '\n';
+                << attacker.getAttackPower() << " damage." << '\n';
         }
 
-        attacker.attack(target, attackerDamage);
+        attacker.attack(target);
 
         if (!target.isDead())
         {
@@ -27,10 +27,10 @@ BattleResult runBattle(Character& attacker, Character& target, int attackerDamag
                 std::cout
                     << target.getName() << " attacks "
                     << attacker.getName() << " for "
-                    << targetDamage << " damage." << '\n';
+                    << target.getAttackPower() << " damage." << '\n';
             }
             
-            target.attack(attacker, targetDamage);
+            target.attack(attacker);
         }
 
         if (showLogs)

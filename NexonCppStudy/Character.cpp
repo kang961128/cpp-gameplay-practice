@@ -5,18 +5,25 @@
 Character::Character(
 	int characterId,
 	const std::string& characterName,
-	int maximumHp
+	int maximumHp,
+    int initialAttackPower
 )
 	: name(characterName),
 	hp(maximumHp),
 	maxHp(maximumHp),
-	id(characterId)
+	id(characterId),
+    attackPower(initialAttackPower)
 {
 	if (maxHp < 1)
 	{
 		maxHp = 1;
 		hp = maxHp;
 	}
+
+    if (attackPower < 1)
+    {
+        attackPower = 1;
+    }
 }
 
 int Character::getId() const
@@ -32,6 +39,11 @@ int Character::getHp() const
 int Character::getMaxHp() const
 {
     return maxHp;
+}
+
+int Character::getAttackPower() const
+{
+    return attackPower;
 }
 
 const std::string& Character::getName() const
@@ -82,6 +94,11 @@ void Character::revive()
     }
 }
 
+void Character::attack(Character& target)
+{
+    attack(target, attackPower);
+}
+
 void Character::attack(Character& target, int damage)
 {
     if (isDead())
@@ -99,7 +116,12 @@ bool Character::isDead() const
 
 void Character::printStatus() const
 {
-    std::cout << "[" << id << "] " << name << " HP: " << hp << "/" << maxHp << '\n';
+    std::cout
+        << "[" << id << "] "
+        << name
+        << " HP: " << hp << "/" << maxHp
+        << " Attack: " << attackPower
+        << '\n';
 
     if (isDead())
     {
