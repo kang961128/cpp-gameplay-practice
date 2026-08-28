@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage)
+BattleResult runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage)
 {
     int turn = 1;
 
@@ -27,12 +27,20 @@ void runBattle(Character& attacker, Character& target, int attackerDamage, int t
 
     std::cout << '\n' << "=== Battle Result ===" << '\n';
 
+    BattleResult result;
+
+    result.turnCount = turn - 1;
+
     if (attacker.isDead())
     {
+        result.winnerId = target.getId();
         std::cout << target.getName() << " wins." << '\n';
     }
     else
     {
+        result.winnerId = attacker.getId();
         std::cout << attacker.getName() << " wins." << '\n';
     }
+
+    return result;
 }

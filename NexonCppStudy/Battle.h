@@ -2,4 +2,10 @@
 
 #include "Character.h"
 
-void runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage);
+struct BattleResult
+{
+	int turnCount;
+	int winnerId;
+};
+
+BattleResult runBattle(Character& attacker, Character& target, int attackerDamage, int targetDamage);

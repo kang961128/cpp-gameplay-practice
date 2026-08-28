@@ -2,6 +2,7 @@
 #include "CharacterSearch.h"
 #include "CharacterTests.h"
 #include "Battle.h"
+#include "BattleTests.h"
 
 #include <iostream>
 #include <vector>
@@ -35,6 +36,7 @@ int main()
 {
     runCharacterTests();
     runFindCharacterTests();
+    runBattleTests();
 
     std::vector<Character> party;
 
@@ -77,7 +79,10 @@ int main()
 
     int attackerDamage = readPositiveInt("Enter attacker damage: ");
 
-    runBattle(*attacker, *target, attackerDamage, 20);
+    BattleResult result = runBattle(*attacker, *target, attackerDamage, 20);
+
+    std::cout << "Battle lasted " << result.turnCount << " turns." << '\n';
+    std::cout << "Winner ID: " << result.winnerId << '\n';
     
     return 0;
 }
