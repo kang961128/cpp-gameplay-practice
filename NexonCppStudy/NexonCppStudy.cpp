@@ -135,6 +135,50 @@ void runCharacterTests()
     zeroDamageCharacter.takeDamage(0);
     assert(zeroDamageCharacter.getHp() == 100);
     std::cout << "[PASS] Zero damage has no effect" << '\n';
+
+    Character normalHealingCharacter(995, "Test", 100);
+    normalHealingCharacter.takeDamage(50);
+    normalHealingCharacter.heal(20);
+    assert(normalHealingCharacter.getHp() == 70);
+    std::cout << "[PASS] Normal healing" << '\n';
+
+    Character excessiveHealingCharacter(994, "Test", 100);
+    excessiveHealingCharacter.takeDamage(20);
+    excessiveHealingCharacter.heal(50);
+    assert(excessiveHealingCharacter.getHp() == 100);
+    std::cout << "[PASS] Healing capped at max HP" << '\n';
+
+    Character deadHealingCharacter(993, "Test", 100);
+    deadHealingCharacter.takeDamage(100);
+    assert(deadHealingCharacter.isDead());
+    deadHealingCharacter.heal(50);
+    assert(deadHealingCharacter.isDead());
+    assert(deadHealingCharacter.getHp() == 0);
+    std::cout << "[PASS] Dead character cannot heal" << '\n';
+
+    Character reviveCharacter(992, "Test", 100);
+    reviveCharacter.takeDamage(100);
+    assert(reviveCharacter.isDead());
+    assert(reviveCharacter.getHp() == 0);
+    reviveCharacter.revive();
+    assert(reviveCharacter.getHp() == 100);
+    assert(!reviveCharacter.isDead());
+    std::cout << "[PASS] Revive restores max HP" << '\n';
+
+    Character livingAttacker(991, "Test", 100);
+    Character attackTarget(990, "Test", 100);
+    livingAttacker.attack(attackTarget, 30);
+    assert(livingAttacker.getHp() == 100);
+    assert(attackTarget.getHp() == 70);
+    std::cout << "[PASS] Living character can attack" << '\n';
+
+    Character deadAttacker(989, "Test", 100);
+    Character protectedTarget(988, "Test", 100);
+    deadAttacker.takeDamage(100);
+    assert(deadAttacker.isDead());
+    deadAttacker.attack(protectedTarget, 30);
+    assert(protectedTarget.getHp() == 100);
+    std::cout << "[PASS] Dead character cannot attack" << '\n';
 }
 
 int readPositiveDamage()
@@ -211,9 +255,31 @@ Character* findCharacterById(
     return nullptr;
 }
 
+void runFindCharacterTests()
+{
+    std::vector<Character> testParty;
+
+    testParty.emplace_back(1, "Player", 100);
+    testParty.emplace_back(2, "Mage", 80);
+    testParty.emplace_back(3, "Tank", 150);
+
+    Character* foundCharacter =
+        findCharacterById(testParty, 2);
+    assert(foundCharacter != nullptr);
+    assert(foundCharacter->getId() == 2);
+    assert(foundCharacter->getName() == "Mage");
+    std::cout << "[PASS] Existing character found by ID" << '\n';
+
+    Character* missingCharacter =
+        findCharacterById(testParty, 99);
+    assert(missingCharacter == nullptr);
+    std::cout << "[PASS] Missing character returns nullptr" << '\n';
+}
+
 int main()
 {
     runCharacterTests();
+    runFindCharacterTests();
 
     std::vector<Character> party;
 
@@ -236,19 +302,6 @@ int main()
     int playerDamage = readPositiveDamage();
 
     runBattle(*attacker, *target, playerDamage, 20);
-    
-    /*Character* missingTarget =
-        findCharacterById(party, 99);
-
-    if (missingTarget == nullptr)
-    {
-        std::cout << "Character 99 not found." << '\n';
-    }
-
-    for (const Character& member : party)
-    {
-        member.printStatus();
-    }*/
     
     return 0;
 }
