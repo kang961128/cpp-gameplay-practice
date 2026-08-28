@@ -79,7 +79,7 @@ void runCharacterTests()
     std::cout << "[PASS] Dead character cannot attack" << '\n';
 }
 
-int readPositiveDamage(const std::string& prompt)
+int readPositiveint(const std::string& prompt)
 {
     int value = 0;
 
@@ -197,8 +197,8 @@ int main()
 
     while (true)
     {
-        int attackerId = readPositiveDamage("Enter attacker ID: ");
-        int targetId = readPositiveDamage("Enter target ID: ");
+        int attackerId = readPositiveint("Enter attacker ID: ");
+        int targetId = readPositiveint("Enter target ID: ");
 
         attacker = findCharacterById(party, attackerId);
         target = findCharacterById(party, targetId);
@@ -218,11 +218,7 @@ int main()
         break;
     }        
 
-    
-
-    
-
-    int attackerDamage = readPositiveDamage("Enter Player damage: ");
+    int attackerDamage = readPositiveint("Enter attacker damage: ");
 
     runBattle(*attacker, *target, attackerDamage, 20);
     
