@@ -68,7 +68,7 @@ cpp-gameplay-practice/
 * `CharacterTests`: 캐릭터와 검색 기능 테스트
 * `SkillTests`: 스킬과 쿨다운 테스트
 * `BattleTests`: 전투 결과와 스킬 재사용 테스트
-* `NexonCppStudy`: 사용자 입력과 프로그램 실행 흐름 관리
+* `main`: 사용자 입력과 프로그램 실행 흐름 관리
 
 ## 적용한 C++ 개념
 
@@ -105,7 +105,7 @@ cpp-gameplay-practice/
 
 ## 실행 방법
 
-1. Visual Studio에서 `NexonCppStudy.slnx`를 엽니다.
+1. Visual Studio에서 `CppCombatSimulator.slnx`를 엽니다.
 2. 솔루션을 빌드합니다.
 3. `Ctrl + F5`로 프로그램을 실행합니다.
 4. 실행 모드를 선택합니다.
